@@ -12,3 +12,13 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+class Bookdetails(models.Model):
+    text=models.TextField()
+    created_date = models.DateField(auto_now_add=True)
+
+class BookComet(models.Model):
+    text=models.TextField()
+    created_date = models.DateField(auto_now_add=True)
+    book = models.ForeignKey(Book,on_delete=models.CASCADE,related_name='books_comment')
+
+
