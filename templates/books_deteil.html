@@ -13,14 +13,13 @@
 <h4>{{book.author}}</h4>
 <div>
     <h2>Comment:</h2>
-    <ul>
-        {% for i in book.books_comment.all%}
+    <ul>   {% for i in book.book_comment.all %}
         <li>
-            <p>{{i.text}}</p>
-            <p>{{i.created_date}}</p>
+            <p>{{ i.text }}</p>
         </li>
-        {% endfor %}}
+        {% endfor %}
     </ul>
+    <a href="/add-book/">add new book</a>
 </div>
 </body>
 </html>

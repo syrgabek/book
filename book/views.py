@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpRequest,Http404
-from . import models
-
+from . import models, forma
+from django.shortcuts import redirect, reverse
 
 def hello_word(request):
     return HttpRequest()
@@ -11,12 +11,19 @@ def book_all(request):
     return render(request, 'book_list.html', {'book': book})
 
 def books_detail(request,id):
-    try:
-        book = get_object_or_404(models.Book,id = id)
-        try:
-            comment = models.BookComet.objects.filter(books_id = id).order_by("cd")
-        except models.Book.DuesNotExist:
-            print('nocomment')
-    except models.Book.DuesNotExist:
-        raise Http404('книга не найдена')
-    return render(request,'books_detail.html',{'book':book})
+    book = get_object_or_404(models.Book, id=id)
+    return render(request, "books_deteil.html", {"book": book})
+
+
+
+def add_book(request):
+    method = request.method
+    if method == "POST":
+        form = forma.BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+
+            return redirect(reverse("book:book_all"))
+    else:
+        form = forma.BookForm()
+    return render(request, "book_add.html", {'form': form})
