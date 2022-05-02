@@ -1,45 +1,61 @@
 from django.shortcuts import render,get_object_or_404
-from django.http import HttpRequest,Http404
+
 from . import models, forma
 from django.shortcuts import redirect, reverse
-from datetime import datetime, timedelta
 
-start_date = datetime.today() - timedelta(days=20)
-
-def hello_word(request):
-    return HttpRequest()
-
-def book_all(request):
-    book = models.Book.objects.order_by()
-    return render(request, 'book_list.html', {'book': book})
-
-
-def book_latest(request):
-    book = models.Book.objects.filter(createa_data__gt=start_date).order_by('-id')
-    return render(request, 'book_list.html', {'book': book})
-
-
-def book_genre_romace(request):
-    book = models.Book.objects.filter(gengre='ROMANCE').order_by("-id")
-    return render(request, 'book_list.html', {'book': book})
+from django. views import generic
 
 
 
 
+class BookListView(generic.ListView):
+    template_name = "book_list.html"
+    queryset = models.Book.objects.order_by("-id")
 
-def book_genre_priklyucheniya(request):
-    book = models.Book.objects.filter(gengre='ADVENTURES').order_by('-id')
-    return render(request, 'book_list.html', {'book': book})
-
-
-def book_genre_anime(request):
-    book = models.Book.objects.filter(gengre='ANIME').order_by('-id')
-    return render(request, 'book_list.html', {'book': book})
+    def get_queryset(self):
+        return self.queryset
 
 
-def books_detail(request, id):
-    book = get_object_or_404(models.Book, id=id)
-    return render(request, "books_deteil.html", {"book": book})
+class BookDetailView(generic.DetailView):
+    template_name = "books_deteil.html"
+
+    def get_object(self, **kwargs):
+        book_id = self.kwargs.get("id")
+        return get_object_or_404(models.Book, id=book_id)
+
+
+class BookCreateView(generic.CreateView):
+    template_name = "book_add.html"
+    form_class = forma.BookForm
+    queryset = models.Book.objects.all()
+    success_url = "/book/"
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super(BookCreateView, self).form_valid(form=form)
+
+
+class BookUpdateView(generic.UpdateView):
+    template_name = "book_update.html"
+    form_class = forma.BookForm
+    success_url = "/book/"
+
+    def get_object(self, **kwargs):
+        book_id = self.kwargs.get("id")
+        return get_object_or_404(models.Book, id=book_id)
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super(BookUpdateView, self).form_valid(form=form)
+
+
+class BookDeleteView(generic.DeleteView):
+    success_url = "/book"
+    template_name = "confic_delee.html"
+
+    def get_object(self, **kwargs):
+        book_id = self.kwargs.get("id")
+        return get_object_or_404(models.Book, id=book_id)
 
 
 

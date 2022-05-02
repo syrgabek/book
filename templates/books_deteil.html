@@ -10,10 +10,10 @@ height: 100vh;
 ">
 <style>
 
-  .book_detail__button{
-      margin-bottom: 50px;
-      column-width: auto;
-  }
+    .book_detail__button {
+        margin-bottom: 50px;
+        column-width: auto;
+    }
 
 
 </style>
@@ -21,27 +21,43 @@ height: 100vh;
 <div style="
 color: rgba(84,96,27,0.9);
 ">
-<div class="container">
-    <button type="button" class="btn btn-secondary book_detail__button"> <a href="/book/{{ book.id }}/update/">Update {{ book.title }}</a> </button>
-    <button type="button" class="btn btn-secondary book__button"> <a href="/book/{{ book.id }}/delete/">Delete {{ book.title }}</a></button>
-    <button type="button" class="btn btn-secondary book__button"><a href="/add-book/">add new book</a> </button>
+    <div class="container">
+        <button type="button" class="btn btn-secondary book_detail__button"><a href="/book/{{ object.id }}/update/">Update
+            {{ object.title }}</a></button>
+        <button type="button" class="btn btn-secondary book__button"><a href="/book/{{ object.id }}/delete/">Delete {{ object.title }}
+             </a></button>
+        <button type="button" class="btn btn-secondary book__button"><a href="/add-book/">add new book</a></button>
 
 
-</div>
-    <img src="{{book.image.url}}" alt="">
-    <h2>{{book.title}}</h2>
-    <p>DESCRIPTION:{{book.description}} </p>
-    <p>GENRE:{{book.genre }}</p>
-    <h4>AUTHOR:{{book.author}}</h4>
-    <p>{{book.create_date}}</p>
-    <p>{{book.update_date}}</p>
-{#    <a href="/add-book/">add new book</a>#}
-{#    <a href="/book/{{ book.id }}/update/">Update {{ book.title }}</a>#}
-{#    <a href="/book/{{ book.id }}/delete/">Delete {{ book.title }}</a>#}
+    </div>
+    <div class="book_detail__button">
+        <div class="card">
+            <img src="/{{ object.image.url }}/" class="card-img-top book__image" alt="">
+            <div class="card-body body__detail">
+
+                <h2 class="card-title">{{ object.title }}</h2>
+                <p class="card-text">DESCRIPTION:{{ object.description }} </p>
+                <p class="card-text">GENRE:{{ object.genre }}</p>
+                <h4 class="card-text">AUTHOR:{{ object.author }}</h4>
+                <p class="card-text">{{ object.create_date }}</p>
+                <p class="card-text">{{ object.update_date }}</p>
+                <div class="card-body">
+                    <ul> {% for i in object.book_comment.all %}
+                        <li>
+                            <p>{{ i.text }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div>
-    <ul>   {% for i in book.book_comment.all %}
+    <ul> {% for i in object.book_comment.all %}
         <li>
             <p>{{ i.text }}</p>
         </li>
