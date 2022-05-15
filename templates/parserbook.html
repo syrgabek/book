@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>parserbook list</title>
+</head>
+<body>
+<div>
+    <ul>
+
+        {% for i in object_list %}
+            <li>
+                <img src="{{ i.image }}" class="card-img-top book__img" alt="...">
+                <h2>{{ i.title }}</h2>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

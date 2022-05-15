@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ranobe</title>
+</head>
+<body>
+<ul>
+
+    {% for i in object_list %}
+        <li>
+            <img src="{{ i.image }}" class="card-img-top book__img" alt="...">
+            <h2>{{ i.title }}</h2>
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
