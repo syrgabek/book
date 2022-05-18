@@ -28,4 +28,11 @@ class BookComet(models.Model):
     created_date = models.DateField(auto_now_add=True)
     book = models.ForeignKey(Book,on_delete=models.CASCADE,related_name='books_comment')
 
+class Review(models.Model):
+    text = models.CharField(max_length=100)
+    created_date = models.DateTimeField(auto_now_add=True)
+    age = models.PositiveIntegerField(null=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+
 
